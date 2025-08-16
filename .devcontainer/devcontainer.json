@@ -1,0 +1,19 @@
+{
+  "name": "Dev Container for My Linker",
+  "build": { "dockerfile": "Dockerfile" },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "wmaurer.vscode-jumpy",
+        "sirmspencer.vscode-autohide"
+      ]
+    }
+  },
+  "remoteUser": "root"
+}
