@@ -59,5 +59,5 @@ pub fn parse_rela_table<'a>(
     let num_entries = (rela_header.size / rela_header.entsize) as usize;
     let table_data = &file[rela_header.offset as usize..];
 
-    nom::multi::count(parse_rela_entry, num_entries).parse(&table_data)
+    nom::multi::count(parse_rela_entry, num_entries).parse(table_data)
 }

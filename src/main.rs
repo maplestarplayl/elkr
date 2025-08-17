@@ -14,7 +14,7 @@ fn main() {
         .map(|path| fs::read(path).unwrap())
         .collect();
 
-    let mut linker = LinkerContext::new();
+    let mut linker = LinkerContext::default();
 
     println!("--- 0. Loading input files ---");
     for (i, path) in args[2..].iter().enumerate() {

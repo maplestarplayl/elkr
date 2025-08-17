@@ -4,17 +4,17 @@ pub mod section;
 pub mod symbol;
 
 mod test {
-    use std::path::Path;
-
-    use crate::elf::{
-        header::{EI_CLASS_64, EI_DATA_2LSB, EM_AARCH64, ET_REL, parse_elf_header},
-        relocation::parse_rela_table,
-        section::{SHT_RELA, get_section_name, parse_section_header_table},
-        symbol::{get_symbol_name, parse_symbol_table},
-    };
 
     #[test]
     fn test_parse_elf_file() {
+        use std::path::Path;
+
+        use crate::elf::{
+            header::{EI_CLASS_64, EI_DATA_2LSB, EM_AARCH64, ET_REL, parse_elf_header},
+            relocation::parse_rela_table,
+            section::{SHT_RELA, get_section_name, parse_section_header_table},
+            symbol::{get_symbol_name, parse_symbol_table},
+        };
         // 1. Parse the ELF Header
         let test_elf_path = Path::new("materials/hello.o");
         let elf_data = std::fs::read(test_elf_path).expect("Failed to read ELF file");

@@ -60,18 +60,18 @@ pub struct LinkerContext<'a> {
     // Track where each input file's section starts within the output section
     input_section_offsets: HashMap<(usize, usize), u64>, // (file_index, section_index) -> offset_in_output_section
 }
-
-impl<'a> LinkerContext<'a> {
-    pub fn new() -> Self {
-        LinkerContext {
-            input_files: Vec::new(),
-            output_sections: HashMap::new(),
-            global_symbols: HashMap::new(),
+impl<'a> Default for LinkerContext<'a> {
+    fn default() -> Self {
+        Self {
+            input_files: Default::default(),
+            output_sections: Default::default(),
+            global_symbols: Default::default(),
             current_addr: 0x400_000,
-            input_section_offsets: HashMap::new(),
+            input_section_offsets: Default::default(),
         }
     }
-
+}
+impl<'a> LinkerContext<'a> {
     pub fn add_file(&mut self, filename: String, content: &'a [u8]) {
         let (_, header) = parse_elf_header(content).unwrap();
         let (_, sections) = parse_section_header_table(content, &header).unwrap();
