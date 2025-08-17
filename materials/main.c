@@ -5,6 +5,6 @@ extern int sum(int a, int b);
 int my_global = 10;
 
 int main() {
-    int result = sum(5, 3);
+    int result = sum(3, 19);
     return result;
 }
