@@ -1,13 +1,6 @@
 use std::{env, fs};
 
-use elkr::{
-    elf::{
-        header::parse_elf_header,
-        section::{get_section_name, parse_section_header_table},
-        symbol::{get_symbol_name, parse_symbol_table},
-    },
-    linker::LinkerContext,
-};
+use elkr::linker::LinkerContext;
 
 fn main() {
     let args: Vec<String> = env::args().collect();

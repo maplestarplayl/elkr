@@ -37,7 +37,7 @@ pub struct OutputSection {
 }
 
 pub struct GlobalSymbol<'a> {
-    name: &'a str,
+    _name: &'a str,
     final_addr: u64,
 }
 
@@ -237,8 +237,13 @@ impl<'a> LinkerContext<'a> {
                                 input_section_offset,
                                 symbol.value
                             );
-                            self.global_symbols
-                                .insert(name, GlobalSymbol { name, final_addr });
+                            self.global_symbols.insert(
+                                name,
+                                GlobalSymbol {
+                                    _name: name,
+                                    final_addr,
+                                },
+                            );
                         }
                     }
                 }

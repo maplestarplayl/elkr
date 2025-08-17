@@ -7,7 +7,10 @@ mod test {
     use std::path::Path;
 
     use crate::elf::{
-        header::{parse_elf_header, EI_CLASS_64, EI_DATA_2LSB, EM_AARCH64, ET_REL}, relocation::parse_rela_table, section::{get_section_name, parse_section_header_table, SHT_RELA}, symbol::{get_symbol_name, parse_symbol_table}
+        header::{EI_CLASS_64, EI_DATA_2LSB, EM_AARCH64, ET_REL, parse_elf_header},
+        relocation::parse_rela_table,
+        section::{SHT_RELA, get_section_name, parse_section_header_table},
+        symbol::{get_symbol_name, parse_symbol_table},
     };
 
     #[test]
@@ -100,8 +103,8 @@ mod test {
                 section_name, section_header.offset
             );
 
-            let (_, relocations) =
-                parse_rela_table(&elf_data, section_header).expect("Failed to parse the relocation table");
+            let (_, relocations) = parse_rela_table(&elf_data, section_header)
+                .expect("Failed to parse the relocation table");
 
             println!("Relocation entry num {}", relocations.len());
 

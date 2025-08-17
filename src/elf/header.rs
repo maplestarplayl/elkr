@@ -22,13 +22,13 @@ pub struct ElfHeader {
     pub class: u8, // file class (32-bit or 64-bit)
     pub data: u8,  // Data Encoding
     pub version: u8,
-    os_abi: u8,
-    abi_version: u8,
+    _os_abi: u8,
+    _abi_version: u8,
     // --- other header fields ---
     pub e_type: u16,
     pub e_machine: u16,
     pub e_version: u32,
-    // Gives the virtual address to which the system first transfers control, thus starting the process. 
+    // Gives the virtual address to which the system first transfers control, thus starting the process.
     pub e_entry: u64,
     // holds the program header table's file offset in bytes.
     pub e_phoff: u64,
@@ -96,8 +96,8 @@ pub fn parse_elf_header(input: &[u8]) -> IResult<&[u8], ElfHeader> {
         class,
         data,
         version,
-        os_abi,
-        abi_version,
+        _os_abi: os_abi,
+        _abi_version: abi_version,
         e_type,
         e_machine,
         e_version,

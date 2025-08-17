@@ -14,9 +14,6 @@ pub const R_AARCH64_PREL32: u32 = 261;
 pub const R_AARCH64_JUMP26: u32 = 282;
 pub const R_AARCH64_CALL26: u32 = 283;
 
-
-
-
 /// Since we adopt the `ELF64` specification
 /// We use `Rela` instead of `Rel`
 pub struct Rela {
@@ -62,5 +59,5 @@ pub fn parse_rela_table<'a>(
     let num_entries = (rela_header.size / rela_header.entsize) as usize;
     let table_data = &file[rela_header.offset as usize..];
 
-    Ok(nom::multi::count(parse_rela_entry, num_entries).parse(&table_data)?)
+    nom::multi::count(parse_rela_entry, num_entries).parse(&table_data)
 }
