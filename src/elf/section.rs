@@ -5,14 +5,18 @@ use nom::{
 
 use crate::elf::header::ElfHeader;
 
-
-
+// Section Types, `sh_type`
+pub const SHT_PROGBITS: u32 = 1;
+pub const SHT_SYMTAB: u32 = 2;
 pub const SHT_RELA: u32 = 4;
+pub const SHT_NOBITS: u32 = 8;
+
+#[derive(Clone)]
 pub struct SectionHeader {
-    name_offset: u32, // an index into the section header string table section
+    pub name_offset: u32, // an index into the section header string table section
     pub sh_type: u32,
-    flags: u64,
-    addr: u64,
+    pub flags: u64,
+    pub addr: u64,
     pub offset: u64,
     /// section's size in bytes.
     pub size: u64,
@@ -20,7 +24,8 @@ pub struct SectionHeader {
     pub link: u32,
     /// holds extra information, whose interpretation depends on the section type.
     pub info: u32,
-    addralign: u64,
+    /// Some sections have address alignment constraints.
+    pub addralign: u64,
     /// entry size of a section containing fixed-sized entries
     pub entsize: u64,
 }

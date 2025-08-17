@@ -1,6 +1,19 @@
-use nom::{number::complete::{le_i64, le_u64}, IResult, Parser};
+use nom::{
+    IResult, Parser,
+    number::complete::{le_i64, le_u64},
+};
 
 use crate::elf::section::SectionHeader;
+
+pub const R_AARCH64_ABS64: u32 = 257;
+pub const R_AARCH64_ABS32: u32 = 258;
+pub const R_AARCH64_ABS16: u32 = 259;
+
+pub const R_AARCH64_PREL32: u32 = 261;
+
+pub const R_AARCH64_JUMP26: u32 = 282;
+pub const R_AARCH64_CALL26: u32 = 283;
+
 
 
 
@@ -9,7 +22,7 @@ use crate::elf::section::SectionHeader;
 pub struct Rela {
     pub offset: u64,
     pub info: u64,
-    pub addend: i64, 
+    pub addend: i64,
 }
 
 impl Rela {
@@ -39,7 +52,7 @@ pub fn parse_rela_table<'a>(
     file: &'a [u8],
     rela_header: &SectionHeader,
 ) -> IResult<&'a [u8], Vec<Rela>> {
-    if rela_header.entsize == 0  || rela_header.size % rela_header.entsize != 0 {
+    if rela_header.entsize == 0 || rela_header.size % rela_header.entsize != 0 {
         return Err(nom::Err::Error(nom::error::Error::new(
             file,
             nom::error::ErrorKind::Verify,
@@ -51,4 +64,3 @@ pub fn parse_rela_table<'a>(
 
     Ok(nom::multi::count(parse_rela_entry, num_entries).parse(&table_data)?)
 }
-
