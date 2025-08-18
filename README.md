@@ -6,6 +6,10 @@ This is a simple elf linker written in Rust. I start this project to better lear
 This linker aims to provide a basic implementation of an ELF linker, capable of handling symbol resolution and relocation,
 and finally generates an executable ELF file.
 
+## References
+- [OS Dev Wiki](https://wiki.osdev.org/System_V_ABI)
+- [System V Application Binary Interface](https://www.sco.com/developers/gabi/latest/contents.html)
+
 ## Features
 - Basic ELF parsing
 - Symbol resolution
@@ -31,3 +35,5 @@ $ ./output; echo "Exit code: $?"
 
 ## Implementation Details
 TODO
+
+
