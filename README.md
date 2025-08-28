@@ -34,6 +34,57 @@ $ ./output; echo "Exit code: $?"
 ```
 
 ## Implementation Details
-TODO
+
+### Core Components
+
+The linker consists of three main components:
+
+- **InputFile**: Represents a parsed object file containing sections, symbols, and relocations
+- **LinkerContext**: Manages global symbol resolution and output section merging
+- **OutputSection**: Accumulates merged section data with proper memory layout
+
+### Linking Process
+
+1. **Object File Parsing**: Uses the `object` crate to parse ELF object files and extract sections, symbols, and relocations
+
+2. **Symbol Resolution**: Builds a global symbol table, detecting undefined references and multiple definitions
+
+3. **Section Layout**: Merges input sections (`.text`, `.rodata`, `.data`) into contiguous output sections starting at virtual address `0x400000`
+
+4. **Relocation Processing**: Applies PC-relative and absolute relocations by patching instruction bytes in the output sections
+
+5. **ELF Generation**: Writes a complete executable ELF file with proper headers, section table, and program headers
+
+## File Structure
+
+```
+elkr/
+├── src/
+│   ├── lib.rs              # Crate API: exports LinkerContext and elf module for external use
+│   ├── main.rs             # CLI entry: parses args, reads .o files, drives LinkerContext pipeline
+│   ├── linker.rs           # Core linker: InputFile, OutputSection, LinkerContext; layout/merge/relocate/write
+│   └── elf/
+│       ├── mod.rs          # Module glue: pub use of header/section/symbol/relocation for crate::elf::*
+│       ├── header.rs       # ELF header model and parser: ElfHeader, ET_EXEC, parse_elf_header
+│       ├── section.rs      # Section headers: SectionHeader, SHT_* consts, parse_section_header_table, get_section_name
+│       ├── symbol.rs       # Symbols: Symbol model, parse_symbol_table, get_symbol_name
+│       └── relocation.rs   # Relocations (RELA): types/constants (AArch64), parse_rela_table, helpers (get_type, get_symbol_index)
+├── materials/
+│   ├── main.c          # Example C source with main() function
+│   ├── sum.c           # Example C source with sum() function  
+│   └── start.c         # Example C source with _start() entry point
+├── Cargo.toml          # Rust project configuration and dependencies
+├── .github/
+│   └── copilot-instructions.md  # AI coding assistant guidelines
+└── README.md           # Project documentation
+```
+
+**Key File Purposes:**
+- `src/linker.rs` - Symbol resolution, section merging, relocation processing
+- `src/main.rs` - Command-line interface demonstrating LinkerContext usage
+- `materials/*.c` - Test cases for generating object files with gcc
+- `Cargo.toml` - Specifies dependencies: `object` crate for ELF parsing, `byteorder` for binary output
+
+
 
 

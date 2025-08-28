@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     vim \
     sudo \
-    gcc \ 
+    gcc \
     clang \
     && rm -rf /var/lib/apt/lists/*
 
